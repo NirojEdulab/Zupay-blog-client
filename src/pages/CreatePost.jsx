@@ -30,7 +30,6 @@ const CreatePost = () => {
     content: "",
   });
   const navigate = useNavigate();
-  console.log("loading==>> ", loading);
 
   const config = useMemo(
     () => ({

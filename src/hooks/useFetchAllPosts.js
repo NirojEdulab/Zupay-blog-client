@@ -58,8 +58,6 @@ const useFetchAllPosts = () => {
     }
   };
 
-  console.log("|page===>> ", page);
-
   useState(() => {
     if (location.pathname === "/posts/all") {
       window.addEventListener("scroll", handleScroll);

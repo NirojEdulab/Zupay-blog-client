@@ -1,9 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const MobileSidebarLinks = ({ pathRef, pathName, icon, isLast }) => {
+const MobileSidebarLinks = ({
+  pathRef,
+  pathName,
+  icon,
+  isLast,
+  handleNavigation,
+}) => {
   return (
-    <Link
-      to={pathRef}
+    <div
+      onClick={() => handleNavigation(pathRef)}
       className={`border border-2-secondary rounded-md mt-2 w-full ${
         isLast ? "mb-2" : ""
       }`}
@@ -12,7 +18,7 @@ const MobileSidebarLinks = ({ pathRef, pathName, icon, isLast }) => {
         <span className="text-3xl text-primary">{icon}</span>
         <h3 className="text-lg text-primary font-semibold">{pathName}</h3>
       </div>
-    </Link>
+    </div>
   );
 };
 

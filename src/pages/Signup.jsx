@@ -12,9 +12,10 @@ import { Label } from "@/components/ui/label";
 import { API_URL } from "@/constants/Constants";
 import axios from "axios";
 import { AtSign, Eye, EyeOff, Loader2, Mail, UserRound } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import debounce from "lodash/debounce";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -24,11 +25,68 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [usernameAvailable, setUsernameAvailable] = useState(null);
+
+  const validateForm = () => {
+    if (!fullName || !email || !username || !password) {
+      toast.error("Please fill all the fields.");
+      return false;
+    }
+
+    // Simple email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return false;
+    }
+
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const checkUsernameAvailability = async (username) => {
+    try {
+      const response = await axios.get(
+        `${API_URL}/auth/checkUsername/${username}`,
+        { withCredentials: true }
+      );
+      setUsernameAvailable(response.data.available);
+    } catch (error) {
+      setUsernameAvailable(false);
+      console.error("Error checking username availability:", error);
+    }
+  };
+
+  const debouncedCheckUsername = useCallback(
+    debounce((username) => {
+      if (username.trim() === "") {
+        setUsernameAvailable(null);
+      } else {
+        checkUsernameAvailability(username);
+      }
+    }, 500),
+    []
+  );
+
+  const handleUsernameChange = (e) => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+    debouncedCheckUsername(newUsername);
+  };
 
   const registerUser = async (event) => {
     event.preventDefault();
-    if (!fullName && !email && !username && !password) {
-      toast.error("Please fill all the details...");
+
+    if (!validateForm()) {
+      return;
+    }
+
+    if (!usernameAvailable) {
+      toast.error("Username is not available.");
       return;
     }
 
@@ -109,10 +167,20 @@ const Signup = () => {
                     id="username"
                     placeholder="Enter your Username"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={handleUsernameChange}
                   />
                   <AtSign size={"24px"} />
                 </div>
+                {usernameAvailable === false && (
+                  <p className="text-red-500 text-sm">
+                    Username is already taken.
+                  </p>
+                )}
+                {usernameAvailable === true && (
+                  <p className="text-green-500 text-sm">
+                    Username is available!
+                  </p>
+                )}
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="password" className="text-md">

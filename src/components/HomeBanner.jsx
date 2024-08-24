@@ -1,14 +1,12 @@
-import useFetchAllPosts from "@/hooks/useFetchAllPosts";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 
-const HomeBanner = () => {
-  const { postData } = useFetchAllPosts();
+const HomeBanner = ({ postData = [] }) => {
   const latestPost = postData.slice(0, 3);
 
-  if (latestPost.length === 0) {
+  if (postData.length === 0) {
     return;
   }
 
@@ -29,14 +27,14 @@ const HomeBanner = () => {
                   src={blog.image}
                   loading="lazy"
                   alt={`${blog.title} image`}
-                  className="transition-transform group-hover:scale-105 duration-200 w-full max-h-[650px] object-cover"
+                  className="transition-transform group-hover:scale-105 duration-200 w-full max-h-[650px] min-h-[450px] object-cover"
                 />
                 <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/70 to-transparent">
                   <div className="p-4 text-white">
-                    <h3 className="text-4xl font-bold mb-2 text-white">
+                    <h3 className="text-2xl font-bold mb-2 text-white">
                       {blog.title}
                     </h3>
-                    <p className="text-xl text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       {blog.shortDescription}
                     </p>
                   </div>

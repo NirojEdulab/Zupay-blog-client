@@ -36,6 +36,7 @@ const useFetchAllPosts = () => {
         console.log("error: ", error);
       } finally {
         setLoading(false);
+        setHasMore(false);
       }
     };
 
@@ -49,9 +50,15 @@ const useFetchAllPosts = () => {
     ) {
       if (hasMore && !loading) {
         setPage((prev) => prev + 1);
+      } else {
+        setPage((prev) => prev);
       }
+    } else {
+      setPage(1);
     }
   };
+
+  console.log("|page===>> ", page);
 
   useState(() => {
     if (location.pathname === "/posts/all") {

@@ -10,7 +10,7 @@ import {
 import { Button } from "./ui/button";
 import { FaBars } from "react-icons/fa6";
 import { Separator } from "./ui/separator";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "@/contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import MobileSidebarLinks from "./MobileSidebarLinks";
@@ -27,6 +27,12 @@ import { handleLogout } from "@/hooks/useLogout";
 const MobileSidebarScreen = () => {
   const navigate = useNavigate();
   const { authUser, setAuthUser, setIsLoggedIn } = useContext(AuthContext);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  const handleNavigation = (path) => {
+    navigate(path);
+    setIsSheetOpen(false);
+  };
 
   return (
     <>
@@ -34,7 +40,7 @@ const MobileSidebarScreen = () => {
         <div className="flex sm:hidden gap-2">
           <ModeToggle />
 
-          <Sheet>
+          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild>
               <Button>
                 <FaBars />
@@ -44,7 +50,7 @@ const MobileSidebarScreen = () => {
               <SheetHeader>
                 <SheetTitle>
                   <div className="flex text-4xl font-bold items-center justify-center mb-4">
-                    Your<p className="text-red-600">BLOG</p>
+                    Mind<p className="text-red-600">Roam</p>
                   </div>
                 </SheetTitle>
                 <Separator />
@@ -86,24 +92,28 @@ const MobileSidebarScreen = () => {
                       pathName={"Home"}
                       icon={<Home />}
                       isLast={false}
+                      handleNavigation={handleNavigation}
                     />
                     <MobileSidebarLinks
                       pathRef={`/profile/${authUser._id}`}
                       pathName={"Profile"}
                       icon={<User2 />}
                       isLast={false}
+                      handleNavigation={handleNavigation}
                     />
                     <MobileSidebarLinks
                       pathRef={`/create`}
                       pathName={"Create Post"}
                       icon={<FilePlus />}
                       isLast={false}
+                      handleNavigation={handleNavigation}
                     />
                     <MobileSidebarLinks
                       pathRef={`/myposts/${authUser._id}`}
                       pathName={"My Posts"}
                       icon={<Book />}
                       isLast={true}
+                      handleNavigation={handleNavigation}
                     />
 
                     <Separator />

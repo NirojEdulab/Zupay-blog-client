@@ -1,22 +1,8 @@
 import { CircleChevronUp } from "lucide-react";
 import ScrollToTop from "react-scroll-to-top";
 import BlogCard from "./BlogCard";
-import { useParams } from "react-router-dom";
-import NoPostsFound from "./NoPostsFound";
-import LoadingScreen from "./LoadingScreen";
-import useGetUserPosts from "@/hooks/useGetUserPosts";
-import NoDataFound from "./NoDataFound";
 
-const UserBlogs = () => {
-  const authorId = useParams();
-  const { userPosts, loading, user } = useGetUserPosts(authorId.id);
-
-  if (loading) return <LoadingScreen />;
-
-  if (userPosts.length === 0) {
-    return <NoDataFound />;
-  }
-
+const UserBlogs = ({ userPost = [], user }) => {
   return (
     <div className="max-w-7xl mx-auto mt-10">
       <div className="flex items-center justify-between ml-4 mr-4">
@@ -35,8 +21,8 @@ const UserBlogs = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 mt-4 gap-10">
-        {userPosts.length > 0 &&
-          userPosts.map((data, index) => (
+        {userPost.length > 0 &&
+          userPost.map((data, index) => (
             <BlogCard
               key={index}
               postId={data._id}
@@ -47,11 +33,10 @@ const UserBlogs = () => {
               authorName={data.author.username}
               authorProPic={data.author.profilePic}
               authorUserId={data.author._id}
+              views={data.views}
             />
           ))}
       </div>
-
-      {userPosts.length == 0 && <NoPostsFound />}
     </div>
   );
 };

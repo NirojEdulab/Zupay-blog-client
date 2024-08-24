@@ -44,6 +44,8 @@ const EditPost = () => {
       showCharsCounter: false,
       showWordsCounter: false,
       showXPathInStatusbar: false,
+      toolbarInlineForSelection: true,
+      showPlaceholder: false,
     }),
     []
   );
@@ -118,9 +120,11 @@ const EditPost = () => {
         .then((response) => {
           toast.success(response.data.message);
           navigate(`/posts/${postId}`);
+          setLoading(false);
         })
         .catch((error) => {
           toast.error(error);
+          setLoading(false);
         });
     } catch (error) {
       setLoading(false);

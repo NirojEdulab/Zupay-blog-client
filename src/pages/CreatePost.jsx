@@ -13,7 +13,7 @@ import { CircleArrowLeft, CircleX, CloudUpload, Loader2 } from "lucide-react";
 import { useContext, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import JoditEditor from "jodit-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API_URL, options } from "@/constants/Constants";
 import { AuthContext } from "@/contexts/AuthContext";
 
@@ -29,6 +29,8 @@ const CreatePost = () => {
     shortDescription: "",
     content: "",
   });
+  const navigate = useNavigate();
+  console.log("loading==>> ", loading);
 
   const config = useMemo(
     () => ({
@@ -46,10 +48,7 @@ const CreatePost = () => {
       sizeLG: 900,
       sizeMD: 700,
       sizeSM: 400,
-      toolbarAdaptive: true,
-      uploader: {
-        insertImageAsBase64URI: true,
-      },
+      toolbarAdaptive: false,
     }),
     []
   );
@@ -88,10 +87,6 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedFile) {
-      toast.error("image can not be empty");
-      return;
-    }
 
     if (
       !formValues.title ||
@@ -100,6 +95,21 @@ const CreatePost = () => {
       !selectedFile
     ) {
       toast.error("Please fill in all fields and select an image.");
+      return;
+    }
+
+    if (formValues.title.length < 15) {
+      toast.error("Title must be at least 15 characters long.");
+      return;
+    }
+
+    if (formValues.shortDescription.length < 50) {
+      toast.error("Short description must be at least 50 characters long.");
+      return;
+    }
+
+    if (!selectedFile) {
+      toast.error("image can not be empty");
       return;
     }
 
@@ -124,6 +134,7 @@ const CreatePost = () => {
           shortDescription: "",
           content: "",
         });
+        navigate(`/`);
       } else {
         toast.error(response.data.message);
       }
@@ -162,6 +173,7 @@ const CreatePost = () => {
               value={formValues.title}
               onChange={handleInputChange}
               disabled={loading}
+              required
             />
           </div>
           <div className="flex flex-col gap-y-2">
@@ -175,6 +187,7 @@ const CreatePost = () => {
               value={formValues.shortDescription}
               onChange={handleInputChange}
               disabled={loading}
+              required
             />
           </div>
           <div className="flex flex-col gap-y-2">
@@ -201,9 +214,13 @@ const CreatePost = () => {
               </div>
             )}
 
-            {previewURL && (
-              <div className="flex flex-col justify-center items-center p-14 rounded-sm">
-                <img src={previewURL} alt="Image Preview" className="mb-4" />
+            {(previewURL || selectedFile) && (
+              <div className="flex flex-col justify-center items-center p-2 rounded-sm">
+                <img
+                  src={previewURL}
+                  alt="Image Preview"
+                  className="mb-4 object-cover"
+                />
 
                 {!loading && (
                   <Button
@@ -233,7 +250,7 @@ const CreatePost = () => {
               Description<span className="text-red-500 text-xl">*</span>
             </Label>
             <JoditEditor
-              className="text-black border border-gray-300 rounded-md p-2"
+              className="border border-secondary text-black rounded-md p-2"
               ref={editor}
               config={config}
               value={formValues.content}
@@ -243,7 +260,6 @@ const CreatePost = () => {
                   content: newContent,
                 }))
               }
-              disabled={loading}
             />
           </div>
         </CardContent>

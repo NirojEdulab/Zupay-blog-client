@@ -15,6 +15,7 @@ const BlogCard = ({
   authorName,
   authorProPic,
   authorUserId,
+  views,
 }) => {
   const { authUser } = useContext(AuthContext);
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -33,8 +34,8 @@ const BlogCard = ({
         className={`${cn(
           `${
             !imgLoaded
-              ? "rounded-lg border-2 hidden p-4"
-              : "rounded-lg border-2 p-4"
+              ? "rounded-lg border-2 hidden p-2"
+              : "rounded-lg border-2 p-2"
           }`
         )}`}
       >
@@ -57,9 +58,9 @@ const BlogCard = ({
           {shortDescription}
         </p>
 
-        <div className="flex flex-row items-center mt-4 gap-2">
+        <div className="flex flex-row items-center mt-4 gap-1">
           <Link to={`/profile/${authorUserId}`} onClick={goToTop}>
-            <Avatar className="h-[30px] w-[30px] ">
+            <Avatar className="h-[25px] w-[25px] object-cover">
               <AvatarImage
                 src={
                   authorProPic
@@ -70,11 +71,12 @@ const BlogCard = ({
             </Avatar>
           </Link>
           <Link to={`/profile/${authorUserId}`} onClick={goToTop}>
-            <p className="text-md font-semibold">{authorName}</p>
+            <p className="text-sm sm:text-lg font-medium">{authorName}</p>
           </Link>
-          <p className="text-sm font-semibold">
-            • {moment(createdAt).fromNow()}
-          </p>
+          <div className="flex flex-col justify-end items-end text-end w-full gap-x-1">
+            <p className="text-sm font-normal">{moment(createdAt).fromNow()}</p>
+            <p className="text-sm font-semibold">{views} views </p>
+          </div>
         </div>
       </div>
     </>

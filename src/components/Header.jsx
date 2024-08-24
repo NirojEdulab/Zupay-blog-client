@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./mode-toggle.jsx";
 import { AuthContext } from "@/contexts/AuthContext";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,11 +30,15 @@ const Header = () => {
   const { authUser, isLoggedIn, setAuthUser, setIsLoggedIn } =
     useContext(AuthContext);
 
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
   return (
     <header className="w-full p-6 flex flex-row justify-between items-center border-b-2">
       <Link to={"/"} className="text-primary font-bold text-3xl text-wrap">
         <div className="flex">
-          Your<p className="text-red-600">BLOG</p>
+          Mind<p className="text-red-600">Roam</p>
         </div>
       </Link>
       {/* <div>
@@ -54,7 +58,7 @@ const Header = () => {
               </Button>
             </Link>
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild className="cursor-pointer">
                 <Avatar>
                   <AvatarImage
                     src={
@@ -62,6 +66,7 @@ const Header = () => {
                         ? authUser.profilePic
                         : `https://avatar.iran.liara.run/username?username=${authUser.username}`
                     }
+                    className="object-cover"
                   />
                   <AvatarFallback>
                     {authUser.username.slice(0, 2).toUpperCase()}
@@ -74,33 +79,39 @@ const Header = () => {
                   {authUser.username}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="h-2 w-2" />
-                <DropdownMenuItem className="font-semibold text-md cursor-pointer border border-2-secondary rounded-md mt-1 w-full text-base text-center p-2">
-                  <Link
-                    to={`/`}
-                    className="flex items-center justify-center p-2"
-                  >
-                    <Home size={24} className="mr-2" />
-                    Home
-                  </Link>
+                <DropdownMenuItem
+                  className="font-semibold text-md cursor-pointer border border-2-secondary rounded-md mt-1 w-full text-base text-center p-4"
+                  onClick={() => handleNavigation("/")}
+                >
+                  {/* <Link to={`/`} className="flex items-start p-2 w-full"> */}
+                  <Home size={24} className="mr-2" />
+                  Home
+                  {/* </Link> */}
                 </DropdownMenuItem>
-                <DropdownMenuItem className="font-semibold text-md cursor-pointer border border-2-secondary rounded-md mt-1 w-full text-base text-center p-2">
-                  <Link
+                <DropdownMenuItem
+                  className="font-semibold text-md cursor-pointer border border-2-secondary rounded-md mt-1 w-full text-base text-center p-4"
+                  onClick={() => handleNavigation(`/profile/${authUser._id}`)}
+                >
+                  {/* <Link
                     to={`/profile/${authUser._id}`}
-                    className="flex items-center justify-center p-2"
-                  >
-                    <FaUserCircle size={24} className="mr-2" />
-                    Profile
-                  </Link>
+                    className="flex items-center justify-start p-2 w-full"
+                  > */}
+                  <FaUserCircle size={24} className="mr-2" />
+                  Profile
+                  {/* </Link> */}
                 </DropdownMenuItem>
 
-                <DropdownMenuItem className="font-semibold text-md cursor-pointer border border-2-secondary rounded-md mt-1 mb-2 w-full text-base text-center p-2">
-                  <Link
+                <DropdownMenuItem
+                  className="font-semibold text-md cursor-pointer border border-2-secondary rounded-md mt-1 mb-2 w-full text-base text-center p-4"
+                  onClick={() => handleNavigation(`/myposts/${authUser._id}`)}
+                >
+                  {/* <Link
                     to={`/myposts/${authUser._id}`}
-                    className="flex items-center justify-center p-2"
-                  >
-                    <Book size={24} className="mr-2" />
-                    My Posts
-                  </Link>
+                    className="flex items-center justify-start p-2 w-full"
+                  > */}
+                  <Book size={24} className="mr-2" />
+                  My Posts
+                  {/* </Link> */}
                 </DropdownMenuItem>
 
                 <Separator />

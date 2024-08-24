@@ -1,24 +1,31 @@
 // import AllAuthors from "@/components/AllAuthors";
 import HomeBanner from "@/components/HomeBanner";
 import LatestBlogContainer from "@/components/LatestBlogContainer";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import useFetchAllUsers from "@/hooks/useFetchAllUsers";
-import { Rss, UsersRound } from "lucide-react";
+import NoDataFound from "@/components/NoDataFound";
+import useFetchAllPosts from "@/hooks/useFetchAllPosts";
+import { Rss } from "lucide-react";
 
 const Home = () => {
-  // const { userData, loading } = useFetchAllUsers();
-  // const homeUsers = userData.slice(0, 10);
+  const { loading, postData } = useFetchAllPosts();
 
-  // if (loading) {
-  //   return;
-  // }
+  if (loading) {
+    return;
+  }
+
+  if (!loading && postData.length === 0) {
+    return <NoDataFound />;
+  }
 
   return (
     <div className="my-4">
-      <HomeBanner />
+      <HomeBanner postData={postData} />
 
       <div className="p-8">
-        <LatestBlogContainer heading={"Latest Blogs"} icon={<Rss />} />
+        <LatestBlogContainer
+          postData={postData}
+          heading={"Latest Blogs"}
+          icon={<Rss />}
+        />
       </div>
 
       {/* <div>

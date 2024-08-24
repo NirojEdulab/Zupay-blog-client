@@ -49,6 +49,7 @@ const Dashboard = () => {
             authorName={data.author.username}
             authorProPic={data.author.profilePic}
             authorUserId={data.author._id}
+            views={data.views}
           />
         ))}
       </div>

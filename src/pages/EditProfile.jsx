@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { API_URL } from "@/constants/Constants";
 import { AuthContext } from "@/contexts/AuthContext";
 import axios from "axios";
-import { CircleX } from "lucide-react";
+import { CircleX, Loader2 } from "lucide-react";
 import { useContext, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,7 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const coverImageRef = useRef(null);
   const profileImageRef = useRef(null);
@@ -111,6 +112,7 @@ const EditProfile = () => {
     }
 
     try {
+      setLoading(true);
       const response = await axios.put(
         `${API_URL}/auth/update/${authUser._id}`,
         data,
@@ -122,8 +124,11 @@ const EditProfile = () => {
         navigate(`/profile/${authUser._id}`);
       }
     } catch (error) {
+      setLoading(false);
       toast.error("Failed to update profile. Please try again.");
       console.log("error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -329,8 +334,20 @@ const EditProfile = () => {
           </form>
         </CardContent>
         <CardFooter className="flex justify-center flex-col">
-          <Button type="button" onClick={handleSubmit} className="w-full mt-4">
-            Save Changes
+          <Button
+            type="button"
+            onClick={handleSubmit}
+            className="w-full mt-4"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 animate-spin" />
+                Please wait
+              </>
+            ) : (
+              "Save Changes"
+            )}
           </Button>
         </CardFooter>
       </Card>

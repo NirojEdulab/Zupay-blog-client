@@ -46,6 +46,7 @@ const MoreBlogsContainer = ({ heading }) => {
                 authorName={post.author.username}
                 authorProPic={post.author.profilePic}
                 authorUserId={post.author._id}
+                views={post.views}
               />
             ))}
           </div>

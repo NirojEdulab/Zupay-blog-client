@@ -40,7 +40,6 @@ const PostDetails = () => {
       showCharsCounter: false,
       showWordsCounter: false,
       showXPathInStatusbar: false,
-      inline: true,
       toolbarInlineForSelection: true,
       showPlaceholder: false,
     }),
@@ -96,7 +95,7 @@ const PostDetails = () => {
   return (
     <div>
       {postData && (
-        <section className="max-w-7xl mx-auto px-4 mt-10 border border-2-secondary rounded-md p-2">
+        <section className="max-w-7xl mx-auto px-4 mt-10 border border-2-secondary rounded-md p-2 flex flex-col items-center">
           {/* Blog Post Page Heading with Title, Short desc and date */}
           <div className="flex flex-col items-center justify-center">
             <ScrollToTop
@@ -153,12 +152,12 @@ const PostDetails = () => {
           )}
 
           {/* Blog post Image */}
-          <div className="mt-10">
+          <div className="mt-10 flex justify-center items-center mx-auto">
             <img src={postData.image} alt={`${postData.title} image`} />
           </div>
 
           {/* Author Details */}
-          <div className="mt-6 border border-2-secondary rounded-md p-2 flex justify-between items-center">
+          <div className="mt-6 border border-2-secondary rounded-md p-2 flex justify-between items-center w-full">
             <div className="flex items-center gap-x-4 ml-2">
               <div>
                 <Link to={`/profile/${postData.author._id}`}>
@@ -191,9 +190,9 @@ const PostDetails = () => {
             <div className="flex flex-row gap-2 items-center justify-center mr-2">
               <div>
                 <p className="text-sm sm:text-lg text-muted-foreground font-semibold">
-                  32 views
+                  {postData.views} views
                 </p>
-                <h6 className="text-sm sm:text-lg text-muted-foreground font-medium">
+                <h6 className="text-sm text-muted-foreground font-medium">
                   {moment(postData.createdAt).fromNow()}
                 </h6>
               </div>
@@ -201,9 +200,9 @@ const PostDetails = () => {
           </div>
 
           {/* Blog post content */}
-          <div className="m-4">
+          <div className="m-4 w-full">
             <JoditEditor
-              className="text-black border border-2-secondary rounded-md p-4"
+              className="text-black border border-1-secondary rounded-lg p-4"
               ref={editor}
               config={config}
               value={postData.content}

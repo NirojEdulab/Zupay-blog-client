@@ -1,4 +1,4 @@
-import { Avatar } from "@radix-ui/react-avatar";
+import { Avatar } from "./ui/avatar";
 import { AvatarImage } from "./ui/avatar";
 import { Link } from "react-router-dom";
 

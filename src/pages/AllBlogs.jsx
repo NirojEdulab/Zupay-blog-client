@@ -1,5 +1,4 @@
 import BlogCard from "@/components/BlogCard";
-import BlogCardSkeleton from "@/components/BlogCardSkeleton";
 import LoadingScreen from "@/components/LoadingScreen";
 import { Button } from "@/components/ui/button";
 import useFetchAllPosts from "@/hooks/useFetchAllPosts";
@@ -55,6 +54,7 @@ const AllBlogs = () => {
             authorName={data.author.username}
             authorProPic={data.author.profilePic}
             authorUserId={data.author._id}
+            views={data.views}
           />
         ))}
       </div>

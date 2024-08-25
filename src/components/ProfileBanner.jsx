@@ -61,7 +61,7 @@ const ProfileBanner = ({ user }) => {
           <div className="flex  bg-secondary-50">
             <div className="text-center w-1/2 p-4 hover:bg-secondary-100 cursor-pointer">
               <p>
-                <span className="font-semibold">{user.posts.length}</span>{" "}
+                <span className="font-semibold">{user.posts?.length}</span>{" "}
                 Uploads
               </p>
             </div>

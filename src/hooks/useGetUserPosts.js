@@ -12,16 +12,17 @@ const useGetUserPosts = (userId) => {
     const getUserPosts = async () => {
       try {
         if (userId) {
-          setLoading(true);
           const response = await axios.get(`${API_URL}/auth/user/${userId}`, {
             withCredentials: true,
           });
           if (response.data.status === 200) {
             setUserPosts(response.data.data);
+            setLoading(false);
           }
         }
       } catch (error) {
         setError(error);
+        setLoading(false);
         toast.error(error.response.data.message);
         console.log("error: ", error);
       } finally {

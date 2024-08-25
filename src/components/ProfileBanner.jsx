@@ -10,21 +10,18 @@ const ProfileBanner = ({ user }) => {
   const [coverImageLoading, setCoverImageLoading] = useState(true);
   const [profileImageLoading, setProfileImageLoading] = useState(true);
 
-  if (!user) return;
-
   return (
     <div className="bg-secondary flex items-center justify-center m-4 rounded-sm p-4">
-      <div className="bg-secondary shadow-lg transform duration-200 easy-in-out rounded-sm">
-        <div className="max-h-64 overflow-hidden max-w-9xl">
+      <div className="shadow-lg rounded-sm p-2 min-w-full">
+        <div className="max-h-64 overflow-hidden max-w-7xl">
           {coverImageLoading && (
-            <div className="min-w-7xl h-64 bg-gray-200 animate-pulse rounded-md"></div>
+            <div className="h-64 bg-gray-200 animate-pulse rounded-md"></div>
           )}
           <img
-            className={`max-w-7xl min-h-32 object-cover ${
+            className={`min-h-32 object-cover rounded-md ${
               coverImageLoading ? "hidden" : ""
             }`}
             src={user && user?.coverImage}
-            loading="lazy"
             alt={`${user.username} cover picture`}
             onLoad={() => setCoverImageLoading(false)}
             onError={(e) => {
@@ -37,12 +34,12 @@ const ProfileBanner = ({ user }) => {
             <div className="h-32 w-32 bg-gray-200 animate-pulse rounded-full"></div>
           )}
           <img
-            className={`h-32 w-32 bg-white p-2 rounded-full object-cover ${
+            className={`h-32 w-32 bg-[linear-gradient(to_right,theme(colors.indigo.400),theme(colors.indigo.100),theme(colors.sky.400),theme(colors.fuchsia.400),theme(colors.sky.400),theme(colors.indigo.100),theme(colors.indigo.400))] bg-[length:200%_auto] animate-gradient p-2 rounded-full object-cover ${
               profileImageLoading ? "hidden" : ""
             }`}
             src={
-              user && user.profilePic
-                ? user.profilePic
+              user && user?.profilePic
+                ? user?.profilePic
                 : `https://avatar.iran.liara.run/username?username=${user.username}`
             }
             loading="lazy"

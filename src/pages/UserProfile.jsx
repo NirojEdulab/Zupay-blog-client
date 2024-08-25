@@ -1,5 +1,4 @@
 import LoadingScreen from "@/components/LoadingScreen";
-import NoDataFound from "@/components/NoDataFound";
 import ProfileBanner from "@/components/ProfileBanner";
 import { Button } from "@/components/ui/button";
 import UserBlogs from "@/components/UserBlogs";
@@ -14,10 +13,6 @@ const UserProfile = () => {
   const { authUser } = useContext(AuthContext);
 
   if (loading) return <LoadingScreen />;
-
-  if (!loading && userPosts.length === 0) {
-    return <NoDataFound />;
-  }
 
   return (
     <div className="w-full mx-auto border border-2-secondary rounded-md p-2">

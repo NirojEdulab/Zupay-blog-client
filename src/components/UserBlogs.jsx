@@ -1,6 +1,7 @@
 import { CircleChevronUp } from "lucide-react";
 import ScrollToTop from "react-scroll-to-top";
 import BlogCard from "./BlogCard";
+import NoDataFound from "./NoDataFound";
 
 const UserBlogs = ({ userPost = [], user }) => {
   return (
@@ -37,6 +38,11 @@ const UserBlogs = ({ userPost = [], user }) => {
             />
           ))}
       </div>
+      {userPost.length === 0 && (
+        <div className="w-full flex flex-col justify-center items-center gap-2">
+          <NoDataFound />
+        </div>
+      )}
     </div>
   );
 };

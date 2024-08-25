@@ -10,7 +10,7 @@ const MobileSidebarLinks = ({
   return (
     <div
       onClick={() => handleNavigation(pathRef)}
-      className={`border border-2-secondary rounded-md mt-2 w-full ${
+      className={`border border-2-secondary rounded-md mt-2 w-full cursor-pointer ${
         isLast ? "mb-2" : ""
       }`}
     >

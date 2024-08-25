@@ -2,11 +2,6 @@
 
 <h1 align="center" style="font-weight: bold;">MindRoam - User Documentation</h1>
 
-<p align="center">
-<a href="#technologies">Technologies</a>
-<a href="#started">Getting Started</a>
-</p>
-
 
 <p align="center">MindRoam is a user-friendly blog application where individuals can create, edit, and share posts. With a clean and responsive design, users can browse through posts and manage their own profiles. The platform includes authentication features, ensuring secure access for authors and readers alike.</p>
 
@@ -14,6 +9,29 @@
 <p align="center">
 <a href="https://mindroam.vercel.app/">📱 Visit this Project</a>
 </p>
+
+
+
+
+<h2 id="creds">Credentials</h2>
+
+- Open Your Browser:
+Use any modern web browser (Chrome, Firefox, Safari, Edge).
+Visit the Application URL:
+
+- Go to https://mindroam.vercel.app/.
+- Log In: Enter the following credentials to access the application:
+
+  <b>Email</b>: admin@test.com
+  
+  <b>Username</b>: admin
+  
+  <b>Password</b>: admin@123
+
+Click the "Log In" button to proceed.
+
+<b>NOTE: You can login into the application by using either email address or usename.</b>
+<i><p style="color:'red'; font-size: '10px'">Username is case sensitive. Please check once before registration or login.</p></i>
 
 <h2 id="technologies">💻 Technologies</h2>
 

@@ -124,10 +124,10 @@ const PostDetails = () => {
               }
             />
             <h1 className="max-w-[280px] md:max-w-xl lg:max-w-3xl xl:max-w-5xl text-xl sm:text-3xl md:text-5xl mt-4 font-semibold text-center text-ellipsis overflow-hidden ...">
-              {postData.shortDescription}
+              {postData.title}
             </h1>
             <h6 className="max-w-[280px] md:max-w-xl lg:max-w-3xl xl:max-w-5xl text-sm sm:text-lg mt-8 text-center text-ellipsis overflow-hidden ...">
-              {/* {postData.shortDescription} */}
+              {postData.shortDescription}
             </h6>
           </div>
 

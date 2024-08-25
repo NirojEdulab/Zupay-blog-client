@@ -17,10 +17,10 @@ const ProfileBanner = ({ user }) => {
       <div className="bg-secondary shadow-lg transform duration-200 easy-in-out rounded-sm">
         <div className="max-h-64 overflow-hidden max-w-9xl">
           {coverImageLoading && (
-            <div className="h-64 bg-gray-200 animate-pulse rounded-md"></div>
+            <div className="min-w-7xl h-64 bg-gray-200 animate-pulse rounded-md"></div>
           )}
           <img
-            className={`max-w-9xl min-h-32 object-cover ${
+            className={`max-w-7xl min-h-32 object-cover ${
               coverImageLoading ? "hidden" : ""
             }`}
             src={user && user?.coverImage}

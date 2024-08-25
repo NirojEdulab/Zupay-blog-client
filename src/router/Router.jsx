@@ -64,61 +64,41 @@ const Router = () => {
           <Route
             path="/"
             element={
-              isLoggedIn ? (
-                <Suspense fallback={<LoadingScreen />}>
-                  <Home />
-                </Suspense>
-              ) : (
-                <Navigate to="/login" />
-              )
+              <Suspense fallback={<LoadingScreen />}>
+                {isLoggedIn ? <Home /> : <Navigate to="/login" />}
+              </Suspense>
             }
           />
           <Route
             path="/myposts/:id"
             element={
-              isLoggedIn ? (
-                <Suspense fallback={<LoadingScreen />}>
-                  <Dashboard />
-                </Suspense>
-              ) : (
-                <Navigate to="/login" />
-              )
+              <Suspense fallback={<LoadingScreen />}>
+                {isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
+              </Suspense>
             }
           />
           <Route
             path="/create"
             element={
-              isLoggedIn ? (
-                <Suspense fallback={<LoadingScreen />}>
-                  <CreatePost />
-                </Suspense>
-              ) : (
-                <Navigate to="/login" />
-              )
+              <Suspense fallback={<LoadingScreen />}>
+                {isLoggedIn ? <CreatePost /> : <Navigate to="/login" />}
+              </Suspense>
             }
           />
           <Route
             path="/posts/:id/edit"
             element={
-              isLoggedIn ? (
-                <Suspense fallback={<LoadingScreen />}>
-                  <EditPost />
-                </Suspense>
-              ) : (
-                <Navigate to="/login" />
-              )
+              <Suspense fallback={<LoadingScreen />}>
+                {isLoggedIn ? <EditPost /> : <Navigate to="/login" />}
+              </Suspense>
             }
           />
           <Route
             path="/login"
             element={
-              isLoggedIn ? (
-                <Navigate to="/" />
-              ) : (
-                <Suspense fallback={<LoadingScreen />}>
-                  <Login />
-                </Suspense>
-              )
+              <Suspense fallback={<LoadingScreen />}>
+                {isLoggedIn ? <Navigate to="/" /> : <Login />}
+              </Suspense>
             }
           />
           <Route
@@ -132,25 +112,17 @@ const Router = () => {
           <Route
             path="/posts/all"
             element={
-              isLoggedIn ? (
-                <Suspense fallback={<BlogCardSkeleton />}>
-                  <AllBlogs />
-                </Suspense>
-              ) : (
-                <Navigate to="/login" />
-              )
+              <Suspense fallback={<LoadingScreen />}>
+                {isLoggedIn ? <AllBlogs /> : <Navigate to="/login" />}
+              </Suspense>
             }
           />
           <Route
             path="/register"
             element={
-              isLoggedIn ? (
-                <Navigate to="/login" />
-              ) : (
-                <Suspense fallback={<LoadingScreen />}>
-                  <Signup />
-                </Suspense>
-              )
+              <Suspense fallback={<LoadingScreen />}>
+                {isLoggedIn ? <Navigate to="/login" /> : <Signup />}
+              </Suspense>
             }
           />
           <Route
@@ -164,13 +136,9 @@ const Router = () => {
           <Route
             path="/profile/:id/edit"
             element={
-              isLoggedIn ? (
-                <Suspense fallback={<LoadingScreen />}>
-                  <EditProfile />
-                </Suspense>
-              ) : (
-                <Navigate to="/login" />
-              )
+              <Suspense fallback={<LoadingScreen />}>
+                {isLoggedIn ? <EditProfile /> : <Navigate to="/login" />}
+              </Suspense>
             }
           />
           <Route

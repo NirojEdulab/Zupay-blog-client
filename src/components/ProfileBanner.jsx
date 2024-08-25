@@ -1,34 +1,45 @@
 /* eslint-disable react/prop-types */
 import { UserCog } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { AuthContext } from "@/contexts/AuthContext";
 
 const ProfileBanner = ({ user }) => {
   const { authUser } = useContext(AuthContext);
+  const [coverImageLoading, setCoverImageLoading] = useState(true);
+  const [profileImageLoading, setProfileImageLoading] = useState(true);
+
+  if (!user) return;
 
   return (
     <div className="bg-secondary flex items-center justify-center m-4 rounded-sm p-4">
       <div className="bg-secondary shadow-lg transform duration-200 easy-in-out rounded-sm">
-        <div className="max-h-64 overflow-hidden">
+        <div className="max-h-64 overflow-hidden max-w-9xl">
+          {coverImageLoading && (
+            <div className="h-64 bg-gray-200 animate-pulse rounded-md"></div>
+          )}
           <img
-            className="w-full min-h-32 object-cover"
-            src={
-              user && user?.coverImage
-                ? user?.coverImage
-                : `https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80`
-            }
+            className={`max-w-9xl min-h-32 object-cover ${
+              coverImageLoading ? "hidden" : ""
+            }`}
+            src={user && user?.coverImage}
             loading="lazy"
             alt={`${user.username} cover picture`}
+            onLoad={() => setCoverImageLoading(false)}
             onError={(e) => {
               e.target.src = `https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80`;
             }}
           />
         </div>
         <div className="flex justify-center px-5 -mt-12">
+          {profileImageLoading && (
+            <div className="h-32 w-32 bg-gray-200 animate-pulse rounded-full"></div>
+          )}
           <img
-            className="h-32 w-32 bg-white p-2 rounded-full object-cover"
+            className={`h-32 w-32 bg-white p-2 rounded-full object-cover ${
+              profileImageLoading ? "hidden" : ""
+            }`}
             src={
               user && user.profilePic
                 ? user.profilePic
@@ -36,6 +47,7 @@ const ProfileBanner = ({ user }) => {
             }
             loading="lazy"
             alt={`${user} profile picture`}
+            onLoad={() => setProfileImageLoading(false)}
             onError={(e) => {
               e.target.src = `https://avatar.iran.liara.run/username?username=${user.username}`;
             }}

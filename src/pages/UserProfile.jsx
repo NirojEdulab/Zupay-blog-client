@@ -9,20 +9,20 @@ import { Link, useParams } from "react-router-dom";
 
 const UserProfile = () => {
   const { id: authorId } = useParams();
-  const { userPosts, loading, user } = useGetUserPosts(authorId);
+  const { userPosts, user } = useGetUserPosts(authorId);
   const { authUser } = useContext(AuthContext);
-
-  if (loading) return <LoadingScreen />;
 
   return (
     <div className="w-full mx-auto border border-2-secondary rounded-md p-2">
-      <ProfileBanner user={user} />
-      {authUser && <UserBlogs userPost={userPosts} user={user} />}
+      {authUser && (
+        <div>
+          <ProfileBanner user={user} />
+          <UserBlogs userPost={userPosts} user={user} />
+        </div>
+      )}
       {!authUser && (
         <div className="w-full flex flex-col justify-center items-center gap-2">
-          <h3 className="text-lg font-medium mt-3">
-            Please login to view posts
-          </h3>
+          <h3 className="text-lg font-medium mt-3">Please login to view</h3>
           <Link to={"/login"}>
             <Button>Login</Button>
           </Link>

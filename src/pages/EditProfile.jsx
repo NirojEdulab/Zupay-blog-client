@@ -23,6 +23,8 @@ const EditProfile = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [coverImageLoading, setCoverImageLoading] = useState(true);
+  const [profileImageLoading, setProfileImageLoading] = useState(true);
 
   const coverImageRef = useRef(null);
   const profileImageRef = useRef(null);
@@ -126,7 +128,7 @@ const EditProfile = () => {
     } catch (error) {
       setLoading(false);
       toast.error("Failed to update profile. Please try again.");
-      console.log("error:", error);
+      console.log("error:", error.message);
     } finally {
       setLoading(false);
     }
@@ -174,18 +176,20 @@ const EditProfile = () => {
                     <CircleX />
                   </Button>
                 )}
+                {coverImageLoading && (
+                  <div className="w-full h-48 bg-gray-200 animate-pulse rounded-md"></div>
+                )}
                 <img
                   type="file"
                   accept="image/*"
-                  className="w-full h-48 object-cover rounded-md cursor-pointer"
-                  src={
-                    coverImage ||
-                    authUser?.coverImage ||
-                    "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-                  }
+                  className={`w-full h-48 object-cover rounded-md cursor-pointer ${
+                    coverImageLoading ? "hidden" : ""
+                  }`}
+                  src={coverImage || authUser?.coverImage}
                   loading="lazy"
                   alt={`cover picture`}
                   onClick={() => handleImageClick("cover")}
+                  onLoad={() => setCoverImageLoading(false)}
                   onError={(e) => {
                     e.target.src = `https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80`;
                   }}
@@ -219,10 +223,15 @@ const EditProfile = () => {
 
             {/* Profile Image */}
             <div className="relative flex justify-center items-center px-5 -mt-12">
+              {profileImageLoading && (
+                <div className="h-32 w-32 bg-gray-200 animate-pulse rounded-full"></div>
+              )}
               <img
                 type="file"
                 accept="image/*"
-                className="h-32 w-32 bg-[linear-gradient(to_right,theme(colors.indigo.400),theme(colors.indigo.100),theme(colors.sky.400),theme(colors.fuchsia.400),theme(colors.sky.400),theme(colors.indigo.100),theme(colors.indigo.400))] bg-[length:200%_auto] animate-gradient p-1 rounded-full object-cover cursor-pointer"
+                className={`h-32 w-32 bg-[linear-gradient(to_right,theme(colors.indigo.400),theme(colors.indigo.100),theme(colors.sky.400),theme(colors.fuchsia.400),theme(colors.sky.400),theme(colors.indigo.100),theme(colors.indigo.400))] bg-[length:200%_auto] animate-gradient p-1 rounded-full object-cover cursor-pointer ${
+                  profileImageLoading ? "hidden" : ""
+                }`}
                 src={
                   profileImage ||
                   authUser?.profilePic ||
@@ -231,8 +240,9 @@ const EditProfile = () => {
                 loading="lazy"
                 alt={`profile picture`}
                 onClick={() => handleImageClick("profile")}
+                onLoad={() => setProfileImageLoading(false)}
                 onError={(e) => {
-                  e.target.src = `https://avatar.iran.liara.run/username?username=shadow`;
+                  e.target.src = `https://avatar.iran.liara.run/username?username=${formData.username}`;
                 }}
               />
               {profileImage && (

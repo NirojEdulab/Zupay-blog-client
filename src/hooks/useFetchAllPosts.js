@@ -36,29 +36,24 @@ const useFetchAllPosts = () => {
         console.log("error: ", error);
       } finally {
         setLoading(false);
-        setHasMore(false);
       }
     };
 
     getAllPosts();
   }, [page]);
 
-  const handleScroll = async () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop + 1 >=
-      document.documentElement.scrollHeight
-    ) {
-      if (hasMore && !loading) {
-        setPage((prev) => prev + 1);
-      } else {
-        setPage((prev) => prev);
-      }
-    } else {
-      setPage(1);
-    }
-  };
-
   useState(() => {
+    const handleScroll = async () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop + 1 >=
+        document.documentElement.scrollHeight
+      ) {
+        if (hasMore && !loading) {
+          setPage((prev) => prev + 1);
+        }
+      }
+    };
+
     if (location.pathname === "/posts/all") {
       window.addEventListener("scroll", handleScroll);
     }

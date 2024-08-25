@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import { API_URL } from "@/constants/Constants";
 import { AuthContext } from "@/contexts/AuthContext";
 import axios from "axios";
@@ -32,6 +34,7 @@ const PostDetails = () => {
   const [postData, setPostData] = useState([]);
   const { authUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
+  const [imageLoad, setImageLoad] = useState(false);
 
   const config = useMemo(
     () => ({
@@ -48,9 +51,14 @@ const PostDetails = () => {
 
   const getPostData = async () => {
     try {
-      const response = await axios.get(`${API_URL}/posts/${postId}`);
+      const response = await axios.get(`${API_URL}/posts/${postId}`, {
+        withCredentials: true,
+      });
       if (response.data.status === 200) {
         setPostData(response.data.data);
+      } else if (response.data.status === 403) {
+        toast.error(response.data.message);
+        navigate("/");
       } else {
         toast.error(response.data.message);
       }
@@ -88,14 +96,18 @@ const PostDetails = () => {
     } catch (error) {
       toast.error(error.message);
     } finally {
-      setLoading(false); // Stop loading after API call
+      setLoading(false);
     }
+  };
+
+  const checkImageLoad = () => {
+    setImageLoad(true);
   };
 
   return (
     <div>
       {postData && (
-        <section className="max-w-7xl mx-auto px-4 mt-10 border border-2-secondary rounded-md p-2 flex flex-col items-center">
+        <section className="max-w-7xl mx-auto px-4 mt-10 mb-6 border border-2-secondary rounded-md p-2 flex flex-col items-center">
           {/* Blog Post Page Heading with Title, Short desc and date */}
           <div className="flex flex-col items-center justify-center">
             <ScrollToTop
@@ -153,7 +165,19 @@ const PostDetails = () => {
 
           {/* Blog post Image */}
           <div className="mt-10 flex justify-center items-center mx-auto">
-            <img src={postData.image} alt={`${postData.title} image`} />
+            {!imageLoad && (
+              <>
+                <div className="flex flex-col">
+                  <Skeleton className="h-[100px] w-[250px] sm:h-[200px] sm:w-[500px] md:h-[300px] md:w-[750px] lg:h-[400px] lg:w-[1000px] rounded-xl" />
+                </div>
+              </>
+            )}
+            <img
+              src={postData.image}
+              alt={`${postData.title} image`}
+              loading="lazy"
+              onLoad={checkImageLoad}
+            />
           </div>
 
           {/* Author Details */}
@@ -210,6 +234,8 @@ const PostDetails = () => {
           </div>
         </section>
       )}
+
+      <Separator />
 
       {/* Blog post page related blogs */}
       {authUser && (

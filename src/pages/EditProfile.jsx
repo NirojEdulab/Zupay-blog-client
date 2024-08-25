@@ -319,12 +319,12 @@ const EditProfile = () => {
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="password" className="text-md">
-                  Password
+                  Change Password
                 </Label>
                 <div className="flex items-center gap-2">
                   <Input
                     id="password"
-                    placeholder="Enter your password"
+                    placeholder="Enter your new password"
                     value={formData.password}
                     onChange={handleInputChange}
                   />

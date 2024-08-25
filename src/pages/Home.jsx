@@ -22,7 +22,7 @@ const Home = () => {
 
       <div className="p-8">
         <LatestBlogContainer
-          postData={postData}
+          postData={postData.slice(0, 6)}
           heading={"Latest Blogs"}
           icon={<Rss />}
         />

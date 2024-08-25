@@ -5,10 +5,6 @@ import ScrollToTop from "react-scroll-to-top";
 import { CircleChevronUp } from "lucide-react";
 
 const LatestBlogContainer = ({ postData = [], heading, icon }) => {
-  if (postData.length === 0) {
-    return;
-  }
-
   return (
     <>
       <div>

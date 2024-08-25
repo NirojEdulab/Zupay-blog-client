@@ -2,7 +2,7 @@ const NoDataFound = () => {
   return (
     <div className="w-full mx-auto m-2 p-2 flex items-center flex-col justify-center h-full sm:h-[calc(100vh-180px)] bg-secondary">
       <img
-        src="/src/assets/nodatafound.svg"
+        src={"/public/nodatafound.svg"}
         alt="No data found"
         width={"500px"}
         loading="lazy"

@@ -16,7 +16,9 @@ const useFetchAllPosts = () => {
       if (!hasMore) return;
       try {
         setLoading(true);
-        const response = await axios.get(`${API_URL}/posts?page=${page}`);
+        const response = await axios.get(`${API_URL}/posts?page=${page}`, {
+          withCredentials: true,
+        });
         if (response.data.status === 200) {
           const newPosts = response.data.data;
           setPostData((prev) => [...prev, ...response.data.data]);

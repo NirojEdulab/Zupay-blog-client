@@ -13,7 +13,9 @@ const useGetUserPosts = (userId) => {
       try {
         if (userId) {
           setLoading(true);
-          const response = await axios.get(`${API_URL}/auth/user/${userId}`);
+          const response = await axios.get(`${API_URL}/auth/user/${userId}`, {
+            withCredentials: true,
+          });
           if (response.data.status === 200) {
             setUserPosts(response.data.data);
           }

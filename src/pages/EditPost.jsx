@@ -54,7 +54,9 @@ const EditPost = () => {
     // Fetch the existing post data
     const fetchPostData = async () => {
       try {
-        const response = await axios.get(`${API_URL}/posts/${postId}`);
+        const response = await axios.get(`${API_URL}/posts/${postId}`, {
+          withCredentials: true,
+        });
         const { title, shortDescription, content, image } = response.data.data;
         setOriginalValues({ title, shortDescription, content, image });
         setFormValues({ title, shortDescription, content });
@@ -62,7 +64,10 @@ const EditPost = () => {
         setPreviewURL(image);
       } catch (error) {
         toast.error("Failed to load post data.");
-        console.error("Error fetching post data:", error);
+        console.error(
+          "Error fetching post data:",
+          error.response || error.message
+        );
       }
     };
 

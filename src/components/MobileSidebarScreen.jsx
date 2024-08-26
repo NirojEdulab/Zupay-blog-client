@@ -134,9 +134,10 @@ const MobileSidebarScreen = () => {
 
                       <div
                         className="border border-2-secondary rounded-md mt-2 w-full"
-                        onClick={() =>
-                          handleLogout(navigate, setAuthUser, setIsLoggedIn)
-                        }
+                        onClick={() => {
+                          handleLogout(navigate, setAuthUser, setIsLoggedIn);
+                          setIsSheetOpen(false);
+                        }}
                       >
                         <div className="flex justify-center items-center gap-2 hover:bg-secondary rounded-md p-3 cursor-pointer">
                           <span className="text-3xl text-primary">

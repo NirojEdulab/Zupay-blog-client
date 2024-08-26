@@ -1,6 +1,7 @@
 // import AllAuthors from "@/components/AllAuthors";
 import HomeBanner from "@/components/HomeBanner";
 import LatestBlogContainer from "@/components/LatestBlogContainer";
+import LoadingScreen from "@/components/LoadingScreen";
 import NoDataFound from "@/components/NoDataFound";
 import useFetchAllPosts from "@/hooks/useFetchAllPosts";
 import { Rss } from "lucide-react";
@@ -9,7 +10,7 @@ const Home = () => {
   const { loading, postData } = useFetchAllPosts();
 
   if (loading) {
-    return;
+    return <LoadingScreen />;
   }
 
   if (!loading && postData.length === 0) {

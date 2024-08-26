@@ -19,7 +19,6 @@ import { Suspense, useContext } from "react";
 import { AuthContext } from "@/contexts/AuthContext";
 import LoadingScreen from "@/components/LoadingScreen.jsx";
 import axios from "axios";
-import BlogCardSkeleton from "@/components/BlogCardSkeleton.jsx";
 
 const Router = () => {
   const { isLoggedIn } = useContext(AuthContext);
@@ -59,6 +58,7 @@ const Router = () => {
   return (
     <>
       <BrowserRouter>
+        <Suspense fallback={<LoadingScreen />}>
         <Header />
         <Routes>
           <Route
@@ -151,6 +151,7 @@ const Router = () => {
           />
         </Routes>
         <Footer />
+        </Suspense>
       </BrowserRouter>
     </>
   );

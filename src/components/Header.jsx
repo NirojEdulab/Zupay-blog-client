@@ -34,6 +34,12 @@ const Header = () => {
     navigate(path);
   };
 
+  const getCompressedImageUrl = (url) => {
+    const baseUrl = url.split("upload/")[0];
+    const imagePath = url.split("upload/")[1];
+    return `${baseUrl}upload/w_400,f_auto/${imagePath}`;
+  };
+
   return (
     <header className="w-full p-6 flex flex-row justify-between items-center border-b-2">
       <Link to={"/"} className="text-primary font-bold text-3xl text-wrap">
@@ -63,7 +69,7 @@ const Header = () => {
                   <AvatarImage
                     src={
                       authUser && authUser.profilePic
-                        ? authUser.profilePic
+                        ? getCompressedImageUrl(authUser.profilePic)
                         : `https://avatar.iran.liara.run/username?username=${authUser.username}`
                     }
                     className="object-cover"

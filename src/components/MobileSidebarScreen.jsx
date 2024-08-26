@@ -35,6 +35,12 @@ const MobileSidebarScreen = () => {
     setIsSheetOpen(false);
   };
 
+  const getCompressedImageUrl = (url) => {
+    const baseUrl = url.split("upload/")[0];
+    const imagePath = url.split("upload/")[1];
+    return `${baseUrl}upload/w_400,f_auto/${imagePath}`;
+  };
+
   return (
     <>
       {authUser && (
@@ -72,7 +78,7 @@ const MobileSidebarScreen = () => {
                         <img
                           src={
                             authUser && authUser.profilePic
-                              ? authUser.profilePic
+                              ? getCompressedImageUrl(authUser.profilePic)
                               : `https://avatar.iran.liara.run/username?username=${authUser.username}`
                           }
                           loading="lazy"

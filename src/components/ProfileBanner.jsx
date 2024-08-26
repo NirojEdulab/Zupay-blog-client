@@ -10,6 +10,12 @@ const ProfileBanner = ({ user }) => {
   const [coverImageLoading, setCoverImageLoading] = useState(true);
   const [profileImageLoading, setProfileImageLoading] = useState(true);
 
+  const getCompressedImageUrl = (url, width) => {
+    const baseUrl = url.split("upload/")[0];
+    const imagePath = url.split("upload/")[1];
+    return `${baseUrl}upload/w_${width},f_auto/${imagePath}`;
+  };
+
   return (
     <div className="bg-secondary flex items-center justify-center m-4 rounded-sm p-4">
       <div className="shadow-lg rounded-sm p-2 min-w-full">
@@ -21,7 +27,7 @@ const ProfileBanner = ({ user }) => {
             className={`min-h-32 object-cover rounded-md ${
               coverImageLoading ? "hidden" : ""
             }`}
-            src={user && user?.coverImage}
+            src={user && getCompressedImageUrl(user?.coverImage, 1280)}
             alt={`${user.username} cover picture`}
             onLoad={() => setCoverImageLoading(false)}
             onError={(e) => {
@@ -39,10 +45,9 @@ const ProfileBanner = ({ user }) => {
             }`}
             src={
               user && user?.profilePic
-                ? user?.profilePic
+                ? getCompressedImageUrl(user?.profilePic, 400)
                 : `https://avatar.iran.liara.run/username?username=${user.username}`
             }
-            loading="lazy"
             alt={`${user} profile picture`}
             onLoad={() => setProfileImageLoading(false)}
             onError={(e) => {

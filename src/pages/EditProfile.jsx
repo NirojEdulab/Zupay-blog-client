@@ -134,6 +134,12 @@ const EditProfile = () => {
     }
   };
 
+  const getCompressedImageUrl = (url, width) => {
+    const baseUrl = url.split("upload/")[0];
+    const imagePath = url.split("upload/")[1];
+    return `${baseUrl}upload/w_${width},f_auto/${imagePath}`;
+  };
+
   if (!authUser) {
     return;
   }
@@ -185,8 +191,8 @@ const EditProfile = () => {
                   className={`w-full h-48 object-cover rounded-md cursor-pointer ${
                     coverImageLoading ? "hidden" : ""
                   }`}
-                  src={coverImage || authUser?.coverImage}
-                  loading="lazy"
+                  src={coverImage || getCompressedImageUrl(authUser?.coverImage,1280)}
+                  
                   alt={`cover picture`}
                   onClick={() => handleImageClick("cover")}
                   onLoad={() => setCoverImageLoading(false)}
@@ -234,10 +240,10 @@ const EditProfile = () => {
                 }`}
                 src={
                   profileImage ||
-                  authUser?.profilePic ||
+                  getCompressedImageUrl(authUser?.profilePic, 500) ||
                   `https://avatar.iran.liara.run/username?username=${formData.username}`
                 }
-                loading="lazy"
+                
                 alt={`profile picture`}
                 onClick={() => handleImageClick("profile")}
                 onLoad={() => setProfileImageLoading(false)}

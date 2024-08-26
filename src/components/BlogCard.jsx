@@ -27,6 +27,12 @@ const BlogCard = ({
     return;
   }
 
+  const getCompressedImageUrl = (url) => {
+    const baseUrl = url.split("upload/")[0];
+    const imagePath = url.split("upload/")[1];
+    return `${baseUrl}upload/w_500,f_auto/${imagePath}`;
+  };
+
   return (
     <>
       {!imgLoaded && <BlogCardSkeleton />}
@@ -39,10 +45,10 @@ const BlogCard = ({
           }`
         )}`}
       >
-        <Link to={`/posts/${postId}`}>
+        <Link to={`/posts/${postId}`} onClick={goToTop}>
           <div className="relative h-[230px]">
             <img
-              src={imageUrl}
+              src={getCompressedImageUrl(imageUrl)}
               alt={`${title} Image`}
               onLoad={() => setImgLoaded(true)}
               className="object-cover w-full h-full rounded-lg"
@@ -64,7 +70,7 @@ const BlogCard = ({
               <AvatarImage
                 src={
                   authorProPic
-                    ? authorProPic
+                    ? getCompressedImageUrl(authorProPic)
                     : `https://avatar.iran.liara.run/username?username=${authorName}`
                 }
               />

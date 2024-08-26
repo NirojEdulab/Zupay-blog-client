@@ -10,6 +10,12 @@ const HomeBanner = ({ postData = [] }) => {
     return;
   }
 
+  const getCompressedImageUrl = (url) => {
+    const baseUrl = url.split("upload/")[0];
+    const imagePath = url.split("upload/")[1];
+    return `${baseUrl}upload/w_1280,f_auto/${imagePath}`;
+  };
+
   return (
     <div className="mb-4">
       <Carousel
@@ -24,10 +30,10 @@ const HomeBanner = ({ postData = [] }) => {
             <CarouselItem key={index}>
               <div className="relative max-w-full overflow-hidden rounded-2xl shadow-lg group">
                 <img
-                  src={blog.image}
+                  src={getCompressedImageUrl(blog.image)}
                   loading="lazy"
                   alt={`${blog.title} image`}
-                  className="transition-transform group-hover:scale-105 duration-200 w-full max-h-[650px] min-h-[450px] object-cover"
+                  className="transition-transform group-hover:scale-105 duration-200 w-full max-h-[450px] min-h-[450px] object-cover"
                 />
                 <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/70 to-transparent">
                   <div className="p-4 text-white">

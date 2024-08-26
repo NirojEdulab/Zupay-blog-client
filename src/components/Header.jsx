@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./mode-toggle.jsx";
 import { AuthContext } from "@/contexts/AuthContext";
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,

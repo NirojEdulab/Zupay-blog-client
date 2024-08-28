@@ -10,23 +10,13 @@
 <a href="https://mindroam.vercel.app/">📱 Visit this Project</a>
 </p>
 
-
-
-
-<h2 id="creds">Credentials</h2>
-
 - Open Your Browser:
 Use any modern web browser (Chrome, Firefox, Safari, Edge).
 Visit the Application URL:
 
 - Go to https://mindroam.vercel.app/.
-- Log In: Enter the following credentials to access the application:
-
-  <b>Email</b>: admin@test.com
-  
-  <b>Username</b>: admin
-  
-  <b>Password</b>: admin@123
+- Sign Up: First register yourself on the application by providing email address, username and password.
+- Log In: Enter your registered credentials to access the application:
 
 Click the "Log In" button to proceed.
 
